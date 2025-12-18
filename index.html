@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us Page Generator</title>
+    <style>
+        /* General Page Styling */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-sizing: border-box; 
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn-generate {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .btn-generate:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-copy {
+            background-color: #28a745;
+            color: white;
+            display: none; 
+        }
+
+        .btn-copy:hover {
+            background-color: #218838;
+        }
+
+        #output-container {
+            margin-top: 30px;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            background: #f9f9f9;
+            font-family: monospace;
+            resize: vertical;
+            margin-top: 10px;
+        }
+
+        .preview-label {
+            margin-top: 20px;
+            font-weight: bold;
+            display: block;
+        }
+
+        #preview {
+            border: 1px solid #ddd;
+            margin-top: 10px;
+            padding: 10px;
+            background: white;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>About Us Generator</h1>
+    
+    <div class="form-group">
+        <label for="siteName">Website Name</label>
+        <input type="text" id="siteName" placeholder="e.g. Bitlite Sync">
+    </div>
+
+    <div class="form-group">
+        <label for="siteType">Website Type</label>
+        <input type="text" id="siteType" placeholder="e.g. Technology Blog">
+    </div>
+
+    <div class="form-group">
+        <label for="siteSpec">Specialty / Focus</label>
+        <input type="text" id="siteSpec" placeholder="e.g. Software Reviews">
+    </div>
+
+    <button class="btn-generate" onclick="generateCode()">Generate My Page</button>
+</div>
+
+<div id="output-container" style="display: none;">
+    <span class="preview-label">HTML Code:</span>
+    <textarea id="resultCode" readonly></textarea>
+    <button class="btn-copy" id="copyBtn" onclick="copyToClipboard()">Copy to Clipboard</button>
+
+    <span class="preview-label">Live Preview:</span>
+    <div id="preview"></div>
+</div>
+
+<script>
+    function generateCode() {
+        // Get values from input fields
+        const name = document.getElementById('siteName').value || "[Website Name]";
+        const type = document.getElementById('siteType').value || "[Website Type]";
+        const spec = document.getElementById('siteSpec').value || "[Specialty]";
+
+        // The HTML Template (Your original design)
+        const htmlCode = `<div style="font-family: Sans-serif; background-color: rgb(248,249,250); padding: 18px; color: black; border: 1px solid #ddd; border-radius: 8px;">
+<br>
+<h2 style="font-family: Sans-serif; color: black;">About Us !</h2>
+<h2 style="font-family: Sans-serif; text-align: center;">Welcome To <span id="W_Name1">${name}</span></h2>
+<p><span id="W_Name2">${name}</span> is a Professional <span id="W_Type1">${type}</span> Platform. Here we will only provide you with interesting content that you will enjoy very much. We are committed to providing you the best of <span id="W_Type2">${type}</span>, with a focus on reliability and <span id="W_Spec">${spec}</span>. We strive to turn our passion for <span id="W_Type3">${type}</span> into a thriving website. We hope you enjoy our <span id="W_Type4">${type}</span> as much as we enjoy giving them to you.</p>
+<p>I will keep on posting such valuable and knowledgeable information on my Website for all of you. Your love and support matters a lot.</p>
+<p style="font-weight: bold; text-align: center;">Thank you For Visiting Our Site<br><br>
+<span style="color: blue; font-size: 16px; font-weight: bold; text-align: center;">Have a great day !</span></p>
+</div>`;
+
+        // Display the results
+        document.getElementById('resultCode').value = htmlCode;
+        document.getElementById('preview').innerHTML = htmlCode;
+        
+        // Show the containers
+        document.getElementById('output-container').style.display = 'block';
+        document.getElementById('copyBtn').style.display = 'block';
+        
+        // Scroll to the result
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+
+    function copyToClipboard() {
+        const copyText = document.getElementById("resultCode");
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); // For mobile devices
+        navigator.clipboard.writeText(copyText.value);
+        
+        const copyBtn = document.getElementById("copyBtn");
+        copyBtn.innerText = "✓ Copied!";
+        copyBtn.style.backgroundColor = "#155724";
+        
+        setTimeout(() => {
+            copyBtn.innerText = "Copy to Clipboard";
+            copyBtn.style.backgroundColor = "#28a745";
+        }, 2000);
+    }
+</script>
+
+</body>
+</html>
